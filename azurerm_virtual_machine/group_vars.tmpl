@@ -1,0 +1,1 @@
+ansible_ssh_common_args: '-o ConnectTimeout=30 -o StrictHostKeyChecking=no -o ProxyCommand="ssh -o StrictHostKeyChecking=no -W %h:%p -q zoot@${bastion_address}"'

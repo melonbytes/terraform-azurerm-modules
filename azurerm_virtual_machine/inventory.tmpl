@@ -1,0 +1,13 @@
+[${environment_nickname}:children]
+${role}_public
+${role}
+
+[${role}_public]
+%{ for index, pipdata in public_ip_address ~}
+${pipdata.name} ansible_host=${pipdata.ip_address} ansible_ssh_common_args="-o ConnectTimeout=30 -o StrictHostKeyChecking=no" # ${pipdata.name}
+%{ endfor ~}
+
+[${role}]
+%{ for index, nic in private_ip_address ~}
+${nic.name} ansible_host=${nic.private_ip_address} # ${nic.name}
+%{ endfor ~}
