@@ -8,15 +8,10 @@ variable "resource_group" {
 variable "tags" {
   type = map
 }
+
 variable "key_vault_name" {
   type        = string
   description = "Application Gateway name."
-}
-variable "key_vault_certificate_path" {
-    type        = string
-}
-variable "key_vault_certificate_name" {
-    type        = string
 }
 
 variable "key_vault_sku_name" {
