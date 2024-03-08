@@ -17,19 +17,6 @@ terraform {
   }
 }
 
-locals {
-  tags = {
-    Environment     = var.tags.Environment
-    BusinessUnit    = var.tags.BusinessUnit
-    Service         = var.tags.Service
-    System          = var.tags.System
-    SystemOwner     = var.tags.SystemOwner
-    CreatedBy       = var.tags.CreatedBy
-    CreatedDateTime = formatdate("DD/MM/YYYY hh:mm:ss",timestamp())
-    Terraform       = true
-  }
-}
-
 data "azurerm_client_config" "current" {}
 
 
@@ -42,7 +29,12 @@ resource "azurerm_storage_account" "storageaccount" {
   account_tier             = var.account_tier
   account_replication_type = var.account_replication_type
   min_tls_version          = var.min_tls_version
-  tags                     = local.tags
+  tags                        = var.tags
+  lifecycle {
+    ignore_changes = [ 
+      tags["CreatedDateTime"]
+    ]
+  }
   
   dynamic "custom_domain" {
     for_each = length(var.custom_domains) != 0 ? var.custom_domains : []
