@@ -18,17 +18,6 @@ terraform {
 }
 
 locals {
-  tags = {
-    Environment     = var.tags.Environment
-    BusinessUnit    = var.tags.BusinessUnit
-    Service         = var.tags.Service
-    System          = var.tags.System
-    SystemOwner     = var.tags.SystemOwner
-    CreatedBy       = var.tags.CreatedBy
-    CreatedDateTime = formatdate("DD/MM/YYYY hh:mm:ss",timestamp())
-    Terraform       = true
-    Ansible         = var.role
-  }
   vm_datadiskdisk_count_map = { for k in toset(var.instances) : k => var.nb_disks_per_instance }
   luns                      = { for k in local.datadisk_lun_map : k.datadisk_name => k.lun }
   datadisk_lun_map = flatten([
@@ -74,7 +63,12 @@ data "azurerm_subnet" "subnet" {
 resource "azurerm_resource_group" "rg" {
   name     = var.resource_group
   location = var.location
-  tags     = local.tags
+  tags     = var.tags
+  lifecycle {
+    ignore_changes = [ 
+      tags["CreatedDateTime"]
+    ]
+  }
 }
 
 # Create public IP
@@ -83,7 +77,12 @@ resource "azurerm_public_ip" "publicip" {
   location            = var.location
   resource_group_name = azurerm_resource_group.rg.name
   allocation_method   = var.public_ip_allocation_method
-  tags                = local.tags
+  tags                = var.tags
+  lifecycle {
+    ignore_changes = [ 
+      tags["CreatedDateTime"]
+    ]
+  }
   count = var.create_public_ip ? length(var.instances) : 0
 }
 
@@ -93,7 +92,12 @@ resource "azurerm_network_security_group" "nsg" {
   name                = "${each.value}-NSG"
   location            = var.location
   resource_group_name = azurerm_resource_group.rg.name
-  tags                = local.tags
+  tags                = var.tags
+  lifecycle {
+    ignore_changes = [ 
+      tags["CreatedDateTime"]
+    ]
+  }
 
   
   dynamic "security_rule" {
@@ -122,7 +126,12 @@ resource "azurerm_network_interface" "nic" {
   name                = "${each.value}-NIC"
   location            = var.location
   resource_group_name = azurerm_resource_group.rg.name
-  tags                = local.tags
+  tags                = var.tags
+  lifecycle {
+    ignore_changes = [ 
+      tags["CreatedDateTime"]
+    ]
+  }
 
   ip_configuration {
     name                          = "${each.value}-NICConfg"
@@ -142,7 +151,12 @@ resource "azurerm_virtual_machine" "vm" {
   resource_group_name   = azurerm_resource_group.rg.name
   network_interface_ids = [azurerm_network_interface.nic[each.key].id]
   vm_size               = var.vm_size
-  tags                  = local.tags
+  tags                  = var.tags
+  lifecycle {
+    ignore_changes = [ 
+      tags["CreatedDateTime"]
+    ]
+  }
 
   storage_os_disk {
     name              = "${each.value}-OsDisk"
