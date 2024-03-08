@@ -41,7 +41,6 @@ resource "azurerm_storage_account" "storageaccount" {
   account_kind             = var.account_kind
   account_tier             = var.account_tier
   account_replication_type = var.account_replication_type
-  allow_blob_public_access = var.allow_blob_public_access
   min_tls_version          = var.min_tls_version
   tags                     = local.tags
   

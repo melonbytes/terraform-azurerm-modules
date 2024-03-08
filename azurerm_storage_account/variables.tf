@@ -39,12 +39,6 @@ variable "containers" {
   default     = []
 }
 
-variable "allow_blob_public_access" {
-  type          = bool
-  description   = "Determines whether the storage account will permit any blobs to be publicly accessible"
-  default       = false
-}
-
 variable "custom_domains" {
   type          = list(string)
   description   = "List custom domains to configure"
