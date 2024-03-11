@@ -181,7 +181,7 @@ resource "azurerm_virtual_machine" "vm" {
     content {
       disable_password_authentication = var.disable_password_authentication
       dynamic "ssh_keys" {
-        for_each = toset(var.authorized_keys)
+        for_each = var.authorized_keys
         content {
           key_data = each.value
           path = var.admin_ssh_authorized_keys
