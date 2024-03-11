@@ -94,51 +94,20 @@ variable "role" {
 }
 
 variable "publisher" {
-  default = {
-    generic   = "OpenLogic"
-    webserver = "OpenLogic"
-    appserver = "OpenLogic"
-    dbserver  = "OpenLogic"
-    bastion   = "OpenLogic"
-    linux     = "OpenLogic"
-    windows   = "MicrosoftWindowsServer"
-  }
+  type        = string
 }
 
 variable "offer" {
-  default = {
-    generic   = "CentOS"
-    webserver = "CentOS"
-    appserver = "CentOS"
-    dbserver  = "CentOS"
-    bastion   = "CentOS"
-    linux     = "CentOS"
-    windows   = "WindowsServer"
-  }
+  type        = string
 }
 
 variable "sku" {
-  default = {
-    generic   = "8_3"
-    webserver = "8_3"
-    appserver = "8_3"
-    dbserver  = "8_3"
-    bastion   = "8_3"
-    linux     = "8_3"
-    windows   = "2016-Datacenter-smalldisk"
-  }
+  type        = string
 }
 
 variable "image_version" {
-  default = {
-    generic   = "latest"
-    webserver = "latest"
-    appserver = "latest"
-    dbserver  = "latest"
-    bastion   = "latest"
-    linux     = "latest"
-    windows   = "latest"
-  }
+  type        = string
+  default     = "latest"
 }
 
 variable "create_public_ip" {

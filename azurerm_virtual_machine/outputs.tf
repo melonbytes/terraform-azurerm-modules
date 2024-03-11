@@ -6,10 +6,10 @@ output "vm_size" { value = var.vm_size }
 
 output "role" { value = var.role }
 
-output "publisher" { value = lookup(var.publisher, var.role) }
-output "offer" { value = lookup(var.offer, var.role) }
-output "os_sku" { value = lookup(var.sku, var.role) }
-output "image_version" { value = lookup(var.image_version, var.role) }
+output "publisher" { value = var.publisher }
+output "offer" { value = var.offer }
+output "os_sku" { value = var.sku }
+output "image_version" { value = var.image_version }
 
 output "private_ip_address" {
   value = {

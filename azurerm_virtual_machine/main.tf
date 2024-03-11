@@ -166,10 +166,10 @@ resource "azurerm_virtual_machine" "vm" {
   }
 
   storage_image_reference {
-    publisher = lookup(var.publisher, var.role)
-    offer     = lookup(var.offer, var.role)
-    sku       = lookup(var.sku, var.role)
-    version   = lookup(var.image_version, var.role)
+    publisher = var.publisher
+    offer     = var.offer
+    sku       = var.sku
+    version   = var.image_version
   }
 
   os_profile {
