@@ -78,6 +78,12 @@ variable "admin_ssh_authorized_keys" {
   default     = null
 }
 
+variable "authorized_keys" {
+  type        = list(string)
+  description = "SSH authorized keys data"
+  default     = []
+}
+
 
 #
 # Image Variables
@@ -108,6 +114,11 @@ variable "sku" {
 variable "image_version" {
   type        = string
   default     = "latest"
+}
+
+variable "disable_password_authentication" {
+  type        = bool
+  default     = false  
 }
 
 variable "create_public_ip" {

@@ -29,8 +29,6 @@ locals {
     ]
   ])
   instances_list = { for i in toset(var.instances) : i => azurerm_virtual_machine.vm[i] }
-  key_path = "${path.module}/../../../files/ssh/admin_keys"
-  authorized_keys = fileset(local.key_path, "*.pub")
 
   nsg_security_rules = { for idx, security_rule in var.nsg_security_rules : security_rule.name => {
     idx : idx,
@@ -194,11 +192,11 @@ resource "azurerm_virtual_machine" "vm" {
   dynamic "os_profile_linux_config" {
     for_each = var.os_family == "linux" ? [0] : []
     content {
-      disable_password_authentication = true
+      disable_password_authentication = var.disable_password_authentication
       dynamic "ssh_keys" {
-        for_each = local.authorized_keys
+        for_each = var.authorized_keys
         content {
-          key_data = file("${local.key_path}/${ssh_keys.value}")
+          key_data = each.value
           path = var.admin_ssh_authorized_keys
         }
       }
