@@ -3,7 +3,7 @@
 #
 # Author:   Ray Bramwell
 # Created:  20th March 2021
-# Modified: 2nd July 2021
+# Modified: 11th March 2024
 #
 
 
@@ -175,19 +175,6 @@ resource "azurerm_virtual_machine" "vm" {
     admin_username = var.admin_username
     admin_password = var.admin_password
   }
-
-/*
-  os_profile_linux_config {
-    disable_password_authentication = true
-    dynamic "ssh_keys" {
-      for_each = local.authorized_keys
-      content {
-        key_data = file("${local.key_path}/${ssh_keys.value}")
-        path = var.admin_ssh_authorized_keys
-      }
-    }
-  }
-*/
 
   dynamic "os_profile_linux_config" {
     for_each = var.os_family == "linux" ? [0] : []
