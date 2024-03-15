@@ -183,7 +183,7 @@ resource "azurerm_virtual_machine" "vm" {
       dynamic "ssh_keys" {
         for_each = var.authorized_keys
         content {
-          key_data = tostring(each.value.os_profile_linux_config.ssh_keys.value)
+          key_data = ssh_keys.value
           path = var.admin_ssh_authorized_keys
         }
       }
