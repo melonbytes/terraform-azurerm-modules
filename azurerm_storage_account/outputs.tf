@@ -12,3 +12,6 @@ resource "local_file" "blobfuse-config" {
   filename = "${path.module}/../../../files/secret/blobfuse-config.${var.containers[count.index].name}"
   count = var.create_blobfuse_config ? length(var.containers) : 0
 }
+
+output "name" { value = azurerm_storage_account.storageaccount.name }
+output "primary_access_key" { value = azurerm_storage_account.storageaccount.primary_access_key  }
