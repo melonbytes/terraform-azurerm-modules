@@ -28,3 +28,8 @@ variable "key_vault_secrets" {
   description = "List of secrets to store in keyvault"
   default     = []
 }
+
+variable "enable_rbac_authorization" {
+  description = "Boolean flag to specify whether Azure Key Vault uses Role Based Access Control (RBAC) for authorization of data actions"
+  default = false
+}

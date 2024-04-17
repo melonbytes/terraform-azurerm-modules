@@ -47,6 +47,7 @@ resource "azurerm_key_vault" "keyvault" {
   }
   tenant_id                   = data.azurerm_client_config.current.tenant_id
   sku_name                    = var.key_vault_sku_name
+  enable_rbac_authorization   = var.enable_rbac_authorization
 }
 
 
