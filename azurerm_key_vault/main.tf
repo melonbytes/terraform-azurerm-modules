@@ -17,6 +17,7 @@ terraform {
   }
 }
 
+/*
 provider "azurerm" {
   features {
     key_vault {
@@ -25,6 +26,7 @@ provider "azurerm" {
     }
   }
 }
+*/
 
 data "azurerm_client_config" "current" {}
 
